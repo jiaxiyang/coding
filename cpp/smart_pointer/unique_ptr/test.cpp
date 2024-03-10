@@ -99,7 +99,7 @@ struct Test {
 void func(UniquePtr<int> i) {}
 
 int main(int argc, char *argv[]) {
-  // auto ptr = UniquePtr<Test>(new Test(1, 2));
+  auto ptr = UniquePtr<Test>(new Test(1, 2));
 
   // 构造函数必须为explicit， 否则会出现所有权问题，导致资源被提前释放
   // auto raw_ptr = new int(5);
@@ -107,8 +107,8 @@ int main(int argc, char *argv[]) {
   // func(raw_ptr);
   // std::cout << *raw_ptr << std::endl;
 
-  auto ptr1(ptr);
-  auto ptr1 = ptr;
+  // auto ptr1(ptr);
+  // auto ptr1 = ptr;
 
   std::cout << (*ptr).a << std::endl;
   std::cout << (*ptr).b << std::endl;

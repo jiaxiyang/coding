@@ -61,12 +61,15 @@ template <typename T>
 
 class UniquePtr {
 public:
-  explicit UniquePtr(T *ptr) : raw_ptr_(ptr) {
+  explicit UniquePtr(T *ptr)
+      : raw_ptr_(
+            ptr) { // 初始化列表比构造函数里赋值更高效：直接用参数构造，省去了一次赋值操作
     std::cout << "UniquePtr Construction" << std::endl;
   };
-  // copy 构造函数
+  // copy 构造函数: 更高效，直接用other成员变量构造自己的成员变量
+  // other为什么传引用？ 传值会涉及到复制的操作，中间会有临时对象，引用更高效
   UniquePtr(const UniquePtr &other) = delete;
-  // copy 赋值构造函数
+  // copy 赋值构造函数： 需要先构造默认成员变量，再使用other成员变量来赋值
   UniquePtr &operator=(const UniquePtr &other) = delete;
 
   ~UniquePtr() {

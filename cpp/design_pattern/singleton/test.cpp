@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 
+// 懒汉版：第一次使用初始化
 class Singleton {
 public:
   static Singleton &getInstance() {
-    static Singleton singleton;
+    static Singleton singleton; // static变量是多线程安全的
     return singleton;
   }
 
@@ -18,13 +19,36 @@ private:
   Singleton &operator=(const Singleton &other) { return *this; }
 };
 
+class Singleton1 {
+public:
+  static Singleton1 &getInstance() { return singleton_; }
+
+  std::string getName() { return "Singleton1"; };
+
+private:
+  Singleton1() {}
+  Singleton1(const Singleton1 &other) {}
+  ~Singleton1() noexcept {}
+  Singleton1 &operator=(const Singleton1 &other) { return *this; }
+
+private:
+  static Singleton1 singleton_;
+};
+
+Singleton1 Singleton1::singleton_;
+
 int main(int argc, char *argv[]) {
   // Singleton sin; // 报错，不能调用构造函数
   // 使用auto需要加引用, 否则会调用copy constructor
-  auto &sin = Singleton::getInstance();
-  std::cout << "1:" << sin.getName() << ", address=" << &sin << std::endl;
+  auto &sin0 = Singleton::getInstance();
+  std::cout << "0:" << sin0.getName() << ", address=" << &sin0 << std::endl;
   auto &sin1 = Singleton::getInstance();
-  std::cout << "2:" << sin1.getName() << ", address=" << &sin1 << std::endl;
+  std::cout << "1:" << sin1.getName() << ", address=" << &sin1 << std::endl;
+
+  auto &sin2 = Singleton1::getInstance();
+  std::cout << "2:" << sin2.getName() << ", address=" << &sin2 << std::endl;
+  auto &sin3 = Singleton1::getInstance();
+  std::cout << "3:" << sin3.getName() << ", address=" << &sin3 << std::endl;
 
   return 0;
 }

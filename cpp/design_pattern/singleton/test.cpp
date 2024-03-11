@@ -12,8 +12,8 @@ public:
   std::string getName() { return "Singleton"; };
 
 private:
+  // 构造函数不能delete
   Singleton() { std::cout << "Deconstruct Singleton" << std::endl; }
-
   ~Singleton() noexcept {
     std::cout << "Deconstruct Singleton" << std::endl;
   } // noexcept关键字告诉编译器，函数中不会发生异常,这有利于编译器对程序做更多的优化。如果在运行时，noexecpt函数向外抛出了异常（如果函数内部捕捉了异常并完成处理，这种情况不算抛出异常），程序会直接终止，调用std::terminate()函数，该函数内部会调用std::abort()终止程序。

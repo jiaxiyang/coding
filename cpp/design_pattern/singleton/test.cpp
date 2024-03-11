@@ -19,6 +19,7 @@ private:
   Singleton &operator=(const Singleton &other) { return *this; }
 };
 
+// 恶汉版：main之前初始化
 class Singleton1 {
 public:
   static Singleton1 &getInstance() { return singleton_; }

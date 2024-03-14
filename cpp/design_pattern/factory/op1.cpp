@@ -46,6 +46,14 @@ public:
     map_[name] = creator;
     return 0;
   }
+
+  void list_ops() {
+    std::cout << "ops: " << std ::endl;
+    for (auto &[key, value] : map_) {
+      std::cout << key << std::endl;
+    }
+  }
+
   std::unique_ptr<Op> create(std::string op) {
     if (map_.find(op) != map_.end()) {
 
@@ -78,6 +86,8 @@ int main(int argc, char *argv[]) {
 
   auto relu = OpRegister::get_instance().create("Relu");
   std::cout << relu->run("relu input") << std::endl;
+
+  OpRegister::get_instance().list_ops();
 
   return 0;
 }

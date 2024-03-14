@@ -88,6 +88,7 @@ OPREGIST(Relu);
 OPREGIST(Conv);
 
 int main(int argc, char *argv[]) {
+  std::cout << "begin main" << std::endl;
   OpRegister::get_instance().list();
   auto relu = OpRegister::get_instance().create("Relu");
   std::cout << relu->run("relu input") << std::endl;
